@@ -29,6 +29,7 @@ dependencies:
   flutter_swiper_view: ^1.1.8
   card_swiper: ^3.0.1
   shimmer: ^3.0.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +47,8 @@ flutter:
 
   assets:
      - assets/images/
+     - assets/lottie/
+     - assets/icons/
 
   fonts:
     - family: Gilroy
