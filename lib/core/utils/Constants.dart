@@ -1458,3 +1458,49 @@ final filters = [
   {"label": "Offers", "icon": Images.discount, "selected": false},
   {"label": "Less than 30 mins", "icon": Images.time, "selected": false},
 ];
+
+/// Checkout “Complete your meal” upsell — edit [kMealAddonCatalog] to add dishes.
+class MealAddonItem {
+  const MealAddonItem({
+    required this.dishName,
+    required this.priceDisplay,
+    this.imageUrl = '',
+  });
+
+  /// Should match `CartItem.foodName` and any edit-catalog keys you define.
+  final String dishName;
+
+  /// Shown in the strip, e.g. `₹49`.
+  final String priceDisplay;
+
+  /// HTTPS image URL, or empty for the placeholder icon.
+  final String imageUrl;
+}
+
+/// Ordered list for the horizontal upsell on checkout.
+const List<MealAddonItem> kMealAddonCatalog = [
+  MealAddonItem(
+    dishName: 'Masala Chaas',
+    priceDisplay: '₹49',
+    imageUrl:
+        'https://t4.ftcdn.net/jpg/19/15/82/01/360_F_1915820129_wswL0tBqVPVyIlO3CMKjPSdY9pwC8d91.jpg',
+  ),
+  MealAddonItem(
+    dishName: 'Peri Peri Fries',
+    priceDisplay: '₹129',
+    imageUrl:
+        'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_240,h_240/FOOD_CATALOG/IMAGES/CMS/2025/7/12/032a13c0-f973-437e-82e8-89a6242f2e38_32661414-6586-4cfb-9e79-3794a98534c1.jpg',
+  ),
+  MealAddonItem(
+    dishName: 'Gulab Jamun',
+    priceDisplay: '₹79',
+    imageUrl:
+        'https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_960,w_960//InstamartAssets/gulab_jamun.webp?updatedAt=1727155366107',
+  ),
+  MealAddonItem(
+    dishName: 'Cold Coffee',
+    priceDisplay: '₹99',
+    imageUrl:
+        'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80',
+  ),
+];

@@ -21,7 +21,6 @@
 //       (ref) => RestaurantDetailNotifier(),
 //     );
 
-import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yumly/core/utils/Constants.dart';
 

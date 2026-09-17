@@ -7,7 +7,7 @@ class ApiService {
 
   static Future<dynamic> get(String endpoint, {Map<String, String>? headers, Map<String, dynamic>? queryParams}) async {
     try {
-      print('Request url:: ${_baseUrl}${endpoint}');
+      print('Request url:: $_baseUrl$endpoint');
       final uri = Uri.parse('$_baseUrl$endpoint').replace(queryParameters: {
         ...?queryParams,
         'apiKey': '69f8df38d9eb4b9f99568098b1fae553',

@@ -257,7 +257,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:yumly/core/utils/Images.dart';
-import 'package:yumly/core/widgets/CustomLog.dart';
 
 class CustomImage extends StatelessWidget {
   final String? source;

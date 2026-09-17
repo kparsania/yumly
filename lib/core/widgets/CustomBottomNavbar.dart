@@ -1,17 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:yumly/core/utils/Constants.dart';
 import 'package:yumly/core/utils/Colors.dart';
 import 'package:yumly/core/utils/Fonts.dart';
 import 'package:yumly/core/utils/Images.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yumly/core/widgets/CustomLog.dart';
 import 'package:yumly/core/widgets/CustomText.dart';
 
 import '../../features/cart/provider/cart_provider.dart';
 import '../route/screenNames.dart';
 import 'CustomDivider.dart';
+
+/// Resolves full restaurant JSON for navigation, or a minimal map from cart context.
+Map<String, dynamic> _restaurantPayloadForNavigation(
+  String restaurantName,
+  String fallbackImageUrl,
+) {
+  final n = restaurantName.trim();
+  for (final r in restaurants) {
+    final rn = (r['restaurant'] ?? r['title'] ?? '').toString().trim();
+    if (rn == n) {
+      return Map<String, dynamic>.from(r);
+    }
+  }
+  return <String, dynamic>{
+    'restaurant': n,
+    'title': n,
+    'image': fallbackImageUrl,
+    'rating': '4.5',
+    'reviews': '—',
+    'deliveryTime': '25–35 min',
+    'address': '',
+    'categories': 'Food delivery',
+    'menu': <dynamic>[],
+  };
+}
 
 class CustomBottomBar extends ConsumerStatefulWidget {
   final int currentIndex;
@@ -112,7 +137,10 @@ class _CustomBottomBarState extends ConsumerState<CustomBottomBar> {
                                 InkWell(
                                   onTap: () => context.pushNamed(
                                     ScreenNames.RESTAURANT_DETAIL,
-                                    // queryParameters: {'id': restaurant.id},
+                                    extra: _restaurantPayloadForNavigation(
+                                      restaurantName,
+                                      image,
+                                    ),
                                   ),
                                   child: CustomText(
                                     "View full menu",
