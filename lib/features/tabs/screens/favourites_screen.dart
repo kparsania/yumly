@@ -210,7 +210,6 @@ import 'package:yumly/core/utils/Images.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
 import 'package:yumly/core/widgets/CustomText.dart';
 import '../provider/favourites_provider.dart';
-import '../state/favourites_state.dart';
 import '../widgets/favorites_shimmer.dart';
 
 class FavoritesScreen extends ConsumerStatefulWidget {

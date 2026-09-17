@@ -95,7 +95,7 @@ class DineOutHeaderNotifier extends StateNotifier<DineoutHeaderState> {
   // }
 
   void updateFeaturedIndex(int index) {
-    print('updated index:: ${index}');
+    print('updated index:: $index');
     state = state.copyWith(featuredFocusedIndex: index);
   }
 

@@ -9,10 +9,10 @@ class FeaturedIndicator extends StatelessWidget {
   final int itemCount;
 
   const FeaturedIndicator({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.itemCount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

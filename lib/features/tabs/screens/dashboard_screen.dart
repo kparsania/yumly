@@ -7,7 +7,6 @@ import 'package:yumly/core/utils/Colors.dart';
 import 'package:yumly/core/utils/Images.dart';
 import 'package:yumly/core/widgets/CustomDivider.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
-import 'package:yumly/core/widgets/CustomLog.dart';
 import 'package:yumly/features/tabs/widgets/dashboardShimmer.dart';
 import '../../../core/route/screenNames.dart';
 import '../../../core/utils/Fonts.dart';
@@ -326,7 +325,7 @@ class DashboardScreen extends ConsumerWidget {
                   ignoring: false,
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    color: Colors.white.withOpacity(state.appBarOpacity),
+                    color: Colors.white.withValues(alpha: state.appBarOpacity),
                     padding: EdgeInsets.only(
                       top: MediaQuery.of(context).padding.top,
                     ),

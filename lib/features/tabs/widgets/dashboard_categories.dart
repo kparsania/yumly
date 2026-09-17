@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:yumly/core/utils/Colors.dart';
-import 'package:yumly/core/utils/Images.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
 
 import '../../../core/route/screenNames.dart';

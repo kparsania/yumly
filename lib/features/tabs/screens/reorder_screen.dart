@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:yumly/core/utils/Colors.dart';
 import 'package:yumly/core/utils/Fonts.dart';
 import 'package:yumly/core/utils/Images.dart';
-import 'package:yumly/core/widgets/CustomButton.dart';
 import 'package:yumly/core/widgets/CustomDivider.dart';
 import 'package:yumly/core/widgets/CustomText.dart';
 
@@ -264,10 +263,13 @@ class _ReorderScreenState extends ConsumerState<ReorderScreen> {
                                               width: 10.w,
                                             ),
                                             SizedBox(width: 4.w),
-                                            CustomText(
-                                              r['benefits'],
-                                              color: AppColors.mediumGrey,
-                                              fontWeight: Fonts.medium,
+                                            Expanded(
+                                              child: CustomText(
+                                                '${r['benefits']}',
+                                                maxLines: 2,
+                                                color: AppColors.mediumGrey,
+                                                fontWeight: Fonts.medium,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -500,7 +502,7 @@ class _ReorderScreenState extends ConsumerState<ReorderScreen> {
                     ),
                     SizedBox(height: 14.h),
                     CustomText(
-                      "Crafted with 🩷, by khushi",
+                      "Crafted with 🩷, by Khushi",
                       color: AppColors.textSecondary,
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w100,
