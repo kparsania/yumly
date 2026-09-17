@@ -24,6 +24,21 @@ final GlobalKey _filtersKey = GlobalKey();
 bool _showSearchBarInHeader = false;
 bool _showFiltersInHeader = false;
 
+/// Menu JSON often omits `id`; [CartItem.id] must be non-null [int].
+int _menuItemCartId(
+  Map<dynamic, dynamic> item,
+  int index,
+  Map<String, dynamic> restaurantData,
+) {
+  final raw = item['id'];
+  if (raw is int) return raw;
+  if (raw is num) return raw.toInt();
+  final rest = (restaurantData['restaurant'] ?? restaurantData['title'] ?? '')
+      .toString();
+  final name = (item['name'] ?? '').toString();
+  return Object.hash(rest.hashCode, name.hashCode, index);
+}
+
 class RestaurantDetailScreen extends ConsumerStatefulWidget {
   final Map<String, dynamic> restaurant;
 
@@ -54,6 +69,60 @@ class _RestaurantDetailScreen extends ConsumerState<RestaurantDetailScreen> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  Future<void> _addDishToCart(
+    Map<dynamic, dynamic> item,
+    int index,
+    Map<String, dynamic> data,
+  ) async {
+    final notifier = ref.read(cartProvider.notifier);
+    final dishId = _menuItemCartId(item, index, data);
+    final currentRestaurant = (data['restaurant'] ?? data['title'] ?? '')
+        .toString()
+        .trim();
+    final cart = ref.read(cartProvider);
+
+    void doAdd() {
+      notifier.addToCart(
+        CartItem(
+          id: dishId,
+          restautantName: currentRestaurant,
+          foodName: item['name']?.toString() ?? '',
+          image: item['image']?.toString() ?? '',
+          price: double.tryParse(item['newPrice']?.toString() ?? '') ?? 0,
+          detailDescription: item['description']?.toString() ?? '',
+        ),
+      );
+    }
+
+    if (cart.isNotEmpty &&
+        cart.first.restautantName.trim() != currentRestaurant) {
+      final replace = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Replace cart?'),
+          content: Text(
+            'Your cart has dishes from ${cart.first.restautantName}. '
+            'To add items from $currentRestaurant, your current selection will be discarded. '
+            'Do you want to continue?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: const Text('Replace'),
+            ),
+          ],
+        ),
+      );
+      if (replace != true) return;
+      notifier.clearCart();
+    }
+    doAdd();
   }
 
   void _scrollListener() {
@@ -445,11 +514,12 @@ class _RestaurantDetailScreen extends ConsumerState<RestaurantDetailScreen> {
                     shrinkWrap: true,
                     itemCount: menu.length,
                     itemBuilder: (context, index) {
-                      var item = menu[index];
+                      var item = menu[index] as Map<dynamic, dynamic>;
                       final cart = ref.watch(cartProvider);
                       final notifier = ref.read(cartProvider.notifier);
+                      final dishId = _menuItemCartId(item, index, data);
                       final inCart = cart.firstWhere(
-                        (c) => c.id == item['id'],
+                        (c) => c.id == dishId,
                         orElse: () => CartItem(
                           id: 0,
                           restautantName: '',
@@ -457,6 +527,8 @@ class _RestaurantDetailScreen extends ConsumerState<RestaurantDetailScreen> {
                           image: '',
                           price: 0,
                           quantity: 0,
+                          detailDescription: '',
+                          cookingNote: '',
                         ),
                       );
 
@@ -486,22 +558,8 @@ class _RestaurantDetailScreen extends ConsumerState<RestaurantDetailScreen> {
                           newPrice: item['newPrice']?.toString(),
                           // quantity: inCart.quantity > 0 ? inCart.quantity : 0,
                           quantity: inCart.quantity,
-                          onAdd: () {
-                            notifier.addToCart(
-                              CartItem(
-                                id: item['id'],
-                                restautantName: data['restaurant'],
-                                foodName: item['name'],
-                                image: item['image'],
-                                price:
-                                    double.tryParse(
-                                      item['newPrice'].toString(),
-                                    ) ??
-                                    0,
-                              ),
-                            );
-                          },
-                          onRemove: () => notifier.removeFromCart(item['id']),
+                          onAdd: () => _addDishToCart(item, index, data),
+                          onRemove: () => notifier.removeFromCart(dishId),
                           // trailing: inCart.quantity == 0
                           //     ? GestureDetector(
                           //   onTap: () {

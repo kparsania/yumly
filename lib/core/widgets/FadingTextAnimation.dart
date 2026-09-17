@@ -133,12 +133,12 @@ class FadingTextAnimation extends StatefulWidget {
   final Duration transitionDuration;
 
   const FadingTextAnimation({
-    Key? key,
+    super.key,
     required this.texts,
     this.textStyle,
     this.holdDuration = const Duration(seconds: 2),
     this.transitionDuration = const Duration(milliseconds: 120),
-  }) : super(key: key);
+  });
 
   @override
   State<FadingTextAnimation> createState() => _FadingTextAnimationState();

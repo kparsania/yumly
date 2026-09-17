@@ -10,4 +10,7 @@ mixin ScreenNames {
   static const DINEOUT = '/dineOut';
   static const REORDER = '/reorderScreen';
   static const CART = '/cart';
+  static const COUPONS = '/coupons';
+  static const ADDRESSES = '/addresses';
+  static const ADD_ADDRESS = '/addAddress';
 }

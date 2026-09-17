@@ -23,7 +23,7 @@ mixin AppColors {
   static const Color yellow = Color(0xedf6d83e);
   static const Color yellowBanner = Color(0xedFDBC00);
   static const Color white = Color(0xffffffff);
-  static const Color black = Color(0xff000000);
+  static const Color black = Color(0xff1B1B1B);
   static const Color blackSecondary = Color(0xea070707);
   static const Color divider = Color(0xedD3D3D3);
   static const Color pinkLight = Color(0xffFFF2F0);
