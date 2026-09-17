@@ -63,7 +63,6 @@
 //   }
 // }
 
-import 'dart:math' as math;
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';

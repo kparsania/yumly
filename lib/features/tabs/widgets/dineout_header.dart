@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../provider/dineout_provider.dart';
 import '../state/dineout_state.dart';
 
 class DineoutHeader extends StatelessWidget {
@@ -19,7 +18,7 @@ class DineoutHeader extends StatelessWidget {
         right: 16,
         bottom: 8,
       ),
-      color: Colors.white.withOpacity(state.opacity),
+      color: Colors.white.withValues(alpha: state.opacity),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
