@@ -48,7 +48,7 @@ class _ReorderScreenState extends ConsumerState<ReorderScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(reorderProvider);
-    final notifier = ref.read(reorderProvider.notifier);
+    final _ = ref.read(reorderProvider.notifier);
 
     return Scaffold(
       body: SafeArea(
@@ -60,9 +60,9 @@ class _ReorderScreenState extends ConsumerState<ReorderScreen> {
               pinned: false,
               expandedHeight: 60,
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: EdgeInsets.only(left: 16, bottom: 8),
+                titlePadding: EdgeInsets.only(bottom: 16.h,),
                 title: CustomText(
-                  'REORDER',
+                  'Reorder',
                   fontWeight: Fonts.medium,
                   fontSize: 16.sp,
                 ),

@@ -73,6 +73,7 @@ import 'package:yumly/core/widgets/CustomImage.dart';
 import 'package:yumly/core/widgets/CustomText.dart';
 import 'package:yumly/features/tabs/widgets/dineout_drinks&desserts_card.dart';
 import 'package:yumly/features/tabs/widgets/dineout_shimmer.dart';
+
 import '../../../core/utils/Colors.dart';
 import '../../../core/utils/Fonts.dart';
 import '../../../core/utils/Images.dart';
@@ -174,14 +175,14 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
               source: item[index]["image"],
               isNetwork: true,
               borderRadius: BorderRadius.all(Radius.circular(10.w)),
-              width: 200.w,
+              width: 190.w,
               height: 180.h,
             ),
           ),
           CustomImage(
             source: Images.spotlightOverlay,
-            width: 157.w,
-            height: 180.h,
+            width: 140.w,
+            height: 200.h,
             color: item[index]["bannerColor"],
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.w),
@@ -190,14 +191,14 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
           ),
 
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            width: 130.w,
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+            width: 150.w,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(right: 8.w, top: 6.h, bottom: 6.h),
+                  padding: EdgeInsets.only(right: 12.w, top: 6.h, bottom: 6.h),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(16.w)),
                     gradient: LinearGradient(
@@ -221,7 +222,7 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                         color: AppColors.white,
                         size: 12.w,
                       ),
-                      SizedBox(width: 3.h),
+                      SizedBox(width: 6.h),
                       CustomText(
                         item[index]["discount"],
                         fontSize: 12.sp,
@@ -495,14 +496,13 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                     sliver: SliverGrid.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
-                        mainAxisExtent: 180.h,
+                        mainAxisExtent: 160.h,
                         crossAxisSpacing: 10.w,
                         mainAxisSpacing: 10.h,
                       ),
                       itemCount: state.lookingFor!.length,
                       itemBuilder: (a, index) {
                         return Container(
-                          padding: EdgeInsets.only(top: 10.h),
                           decoration: BoxDecoration(
                             border: Border.all(color: AppColors.blueBorder),
                             borderRadius: BorderRadius.all(
@@ -515,30 +515,32 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                             children: [
                               Container(
                                 alignment: Alignment.topLeft,
-                                // width: 140.w,
-                                margin: EdgeInsets.only(top: 10.h, left: 4.w),
+                                margin: EdgeInsets.only(
+                                    top: 8.h, left: 8.w, right: 8.w),
                                 child: CustomText(
                                   state.lookingFor![index]["title"],
-                                  fontSize: 20.sp,
+                                  fontSize: 14.sp,
                                   maxLines: 2,
                                   fontWeight: Fonts.semiBold,
                                   textAlign: TextAlign.left,
                                 ),
                               ),
-                              Container(
-                                alignment: Alignment.bottomRight,
-                                child: CustomImage(
-                                  source: state.lookingFor![index]["image"],
-                                  height:
-                                      state.lookingFor![index]["title"] ==
-                                          "Premium dining"
-                                      ? 80.h
-                                      : 110.h,
-                                  width:
-                                      state.lookingFor![index]["title"] ==
-                                          "Rooftops"
-                                      ? 110.h
-                                      : 100.w,
+                              Flexible(
+                                child: Container(
+                                  alignment: Alignment.bottomRight,
+                                  child: CustomImage(
+                                    source: state.lookingFor![index]["image"],
+                                    height: ["Rooftops", "Buffet"]
+                                        .contains(
+                                        state.lookingFor![index]["title"])
+                                        ? 130.h
+                                        : 90.h,
+                                    width:
+                                    state.lookingFor![index]["title"] ==
+                                        "Rooftops"
+                                        ? 120.h
+                                        : 100.w,
+                                  ),
                                 ),
                               ),
                             ],
@@ -547,7 +549,7 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                       },
                     ),
                   ),
-                  SliverToBoxAdapter(
+                  /*SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(
                         left: 16.w,
@@ -569,7 +571,7 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                           Positioned(
                             top: 22,
                             child: Container(
-                              width: 100.w,
+                              width: 200.w,
                               height: 20.h,
                               padding: EdgeInsets.only(left: 8),
                               color: Color.fromRGBO(9, 19, 25, 1),
@@ -584,8 +586,11 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                         ],
                       ),
                     ),
-                  ),
-                  SliverToBoxAdapter(child: heading("Featured this week")),
+                  ),*/
+                  SliverToBoxAdapter(child: Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: heading("Featured this week"),
+                  )),
                   SliverToBoxAdapter(
                     child: Swiper(
                       itemBuilder: (context, index) {

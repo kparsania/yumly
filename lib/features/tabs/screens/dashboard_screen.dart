@@ -5,9 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:yumly/core/utils/Colors.dart';
 import 'package:yumly/core/utils/Images.dart';
-import 'package:yumly/core/widgets/CustomDivider.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
 import 'package:yumly/features/tabs/widgets/dashboardShimmer.dart';
+
 import '../../../core/route/screenNames.dart';
 import '../../../core/utils/Fonts.dart';
 import '../../../core/widgets/CustomSearchBar.dart';
@@ -15,8 +15,8 @@ import '../../../core/widgets/CustomText.dart';
 import '../../cart/provider/cart_provider.dart';
 import '../provider/dashboard_provider.dart';
 import '../widgets/dashboard_categories.dart';
-import '../widgets/dashboard_restaurant_card.dart';
 import '../widgets/dashboard_featured_restaurants.dart';
+import '../widgets/dashboard_restaurant_card.dart';
 import '../widgets/dashboard_top_sheet.dart';
 
 class DashboardScreen extends ConsumerWidget {
@@ -58,174 +58,322 @@ class DashboardScreen extends ConsumerWidget {
                           child: Stack(
                             alignment: Alignment.bottomCenter,
                             children: [
-                              Positioned(
-                                top: 0,
-                                child: Container(
-                                  height: 351.h,
-                                  width: width,
-                                  color: AppColors.yellowBanner,
-                                ),
-                              ),
+                              // Positioned(
+                              //   top: 0,
+                              //   child: Container(
+                              //     height: 351.h,
+                              //     width: width,
+                              //     color: AppColors.yellowBanner,
+                              //   ),
+                              // ),
                               Column(
                                 children: [
-                                  CustomImage(
-                                    source: Images.background,
-                                    height: 350.h,
+                                  Container(
+                                    height: 190.h,
                                     width: width,
-                                  ),
-                                  CustomImage(
-                                    source: Images.bannerBorder,
-                                    width: width,
-                                    color: AppColors.yellowBanner,
-                                  ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.blueBorder,
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(20.r),
+                                        bottomRight: Radius.circular(20.r),
+                                      ),
+                                    ),
+                                  )
+                                  // CustomImage(
+                                  //   source: Images.background,
+                                  //   height: 350.h,
+                                  //   width: width,
+                                  // ),
+                                  // CustomImage(
+                                  //   source: Images.bannerBorder,
+                                  //   width: width,
+                                  //   color: AppColors.yellowBanner,
+                                  // ),
                                 ],
                               ),
 
-                              Positioned(
-                                bottom: 30.h,
-                                child: SizedBox(
-                                  width: width,
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
+                              // Positioned(
+                              //   bottom: 30.h,
+                              //   child: SizedBox(
+                              //     width: width,
+                              //     child: Stack(
+                              //       alignment: Alignment.bottomCenter,
+                              //       children: [
+                              //         Row(
+                              //           mainAxisAlignment:
+                              //           MainAxisAlignment.spaceEvenly,
+                              //           children: [
+                              //             CustomImage(
+                              //               source: Images.card,
+                              //               height: 100.h,
+                              //               width: 125.w,
+                              //               fit: BoxFit.contain,
+                              //             ),
+                              //             CustomImage(
+                              //               source: Images.card,
+                              //               height: 100.h,
+                              //               width: 125.w,
+                              //               fit: BoxFit.contain,
+                              //             ),
+                              //             CustomImage(
+                              //               source: Images.card,
+                              //               height: 100.h,
+                              //               width: 125.w,
+                              //               fit: BoxFit.contain,
+                              //             ),
+                              //           ],
+                              //         ),
+                              //         Positioned(
+                              //           bottom: 20,
+                              //           left: 0,
+                              //           right: 0,
+                              //           child: Row(
+                              //             mainAxisAlignment:
+                              //             MainAxisAlignment.spaceEvenly,
+                              //             children: [
+                              //               SizedBox(
+                              //                 width: 125.w,
+                              //                 child: CustomText(
+                              //                   "Tacos\n& More",
+                              //                   color: Colors.red,
+                              //                   fontWeight: Fonts.bold,
+                              //                   textAlign: TextAlign.center,
+                              //                   fontSize: 18.sp,
+                              //                   fontFamily: Fonts
+                              //                       .fontFamilyLMontaguSlab,
+                              //                 ),
+                              //               ),
+                              //               SizedBox(
+                              //                 width: 125.w,
+                              //                 child: CustomText(
+                              //                   "Burgers\nSpecials",
+                              //                   color: Colors.red,
+                              //                   fontWeight: Fonts.bold,
+                              //                   textAlign: TextAlign.center,
+                              //                   fontSize: 18.sp,
+                              //                   fontFamily: Fonts
+                              //                       .fontFamilyLMontaguSlab,
+                              //                 ),
+                              //               ),
+                              //               SizedBox(
+                              //                 width: 125.w,
+                              //                 child: CustomText(
+                              //                   "Fulfilling\nBowls",
+                              //                   color: Colors.red,
+                              //                   fontWeight: Fonts.bold,
+                              //                   textAlign: TextAlign.center,
+                              //                   fontSize: 18.sp,
+                              //                   fontFamily: Fonts
+                              //                       .fontFamilyLMontaguSlab,
+                              //                 ),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                              // SizedBox(height: 10.h),
+                              // Positioned(
+                              //   bottom: 80.h,
+                              //   width: width,
+                              //   child: Container(
+                              //     child: Row(
+                              //       mainAxisAlignment:
+                              //       MainAxisAlignment.spaceEvenly,
+                              //       children: [
+                              //         Lottie.asset(
+                              //           Images.tacoJump,
+                              //           height: 120.h,
+                              //           width: 120.w,
+                              //         ),
+                              //         Lottie.asset(
+                              //           Images.burgerJump,
+                              //           height: 120.h,
+                              //           width: 120.w,
+                              //         ),
+                              //         Lottie.asset(
+                              //           Images.noodleJump,
+                              //           height: 120.h,
+                              //           width: 120.w,
+                              //         ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Stack(children: [
+                        Positioned(
+                          bottom: 30.h,
+                          child: SizedBox(
+                            width: width,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CustomImage(
+                                      source: Images.card,
+                                      height: 100.h,
+                                      width: 125.w,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    CustomImage(
+                                      source: Images.card,
+                                      height: 100.h,
+                                      width: 125.w,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    CustomImage(
+                                      source: Images.card,
+                                      height: 100.h,
+                                      width: 125.w,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ],
+                                ),
+                                Positioned(
+                                  bottom: 20,
+                                  left: 0,
+                                  right: 0,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          CustomImage(
-                                            source: Images.card,
-                                            height: 100.h,
-                                            width: 125.w,
-                                            fit: BoxFit.contain,
-                                          ),
-                                          CustomImage(
-                                            source: Images.card,
-                                            height: 100.h,
-                                            width: 125.w,
-                                            fit: BoxFit.contain,
-                                          ),
-                                          CustomImage(
-                                            source: Images.card,
-                                            height: 100.h,
-                                            width: 125.w,
-                                            fit: BoxFit.contain,
-                                          ),
-                                        ],
+                                      SizedBox(
+                                        width: 125.w,
+                                        child: CustomText(
+                                          "Tacos\n& More",
+                                          color: Colors.red,
+                                          fontWeight: Fonts.bold,
+                                          textAlign: TextAlign.center,
+                                          fontSize: 18.sp,
+                                          fontFamily: Fonts
+                                              .fontFamilyLMontaguSlab,
+                                        ),
                                       ),
-                                      Positioned(
-                                        bottom: 20,
-                                        left: 0,
-                                        right: 0,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            SizedBox(
-                                              width: 125.w,
-                                              child: CustomText(
-                                                "Tacos\n& More",
-                                                color: Colors.red,
-                                                fontWeight: Fonts.bold,
-                                                textAlign: TextAlign.center,
-                                                fontSize: 18.sp,
-                                                fontFamily: Fonts
-                                                    .fontFamilyLMontaguSlab,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 125.w,
-                                              child: CustomText(
-                                                "Burgers\nSpecials",
-                                                color: Colors.red,
-                                                fontWeight: Fonts.bold,
-                                                textAlign: TextAlign.center,
-                                                fontSize: 18.sp,
-                                                fontFamily: Fonts
-                                                    .fontFamilyLMontaguSlab,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 125.w,
-                                              child: CustomText(
-                                                "Fulfilling\nBowls",
-                                                color: Colors.red,
-                                                fontWeight: Fonts.bold,
-                                                textAlign: TextAlign.center,
-                                                fontSize: 18.sp,
-                                                fontFamily: Fonts
-                                                    .fontFamilyLMontaguSlab,
-                                              ),
-                                            ),
-                                          ],
+                                      SizedBox(
+                                        width: 125.w,
+                                        child: CustomText(
+                                          "Burgers\nSpecials",
+                                          color: Colors.red,
+                                          fontWeight: Fonts.bold,
+                                          textAlign: TextAlign.center,
+                                          fontSize: 18.sp,
+                                          fontFamily: Fonts
+                                              .fontFamilyLMontaguSlab,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 125.w,
+                                        child: CustomText(
+                                          "Fulfilling\nBowls",
+                                          color: Colors.red,
+                                          fontWeight: Fonts.bold,
+                                          textAlign: TextAlign.center,
+                                          fontSize: 18.sp,
+                                          fontFamily: Fonts
+                                              .fontFamilyLMontaguSlab,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 10.h),
-                              Positioned(
-                                bottom: 80.h,
-                                width: width,
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Lottie.asset(
-                                        Images.tacoJump,
-                                        height: 120.h,
-                                        width: 120.w,
-                                      ),
-                                      Lottie.asset(
-                                        Images.burgerJump,
-                                        height: 120.h,
-                                        width: 120.w,
-                                      ),
-                                      Lottie.asset(
-                                        Images.noodleJump,
-                                        height: 120.h,
-                                        width: 120.w,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-
-                      SizedBox(height: 20),
+                        SizedBox(height: 10.h),
+                        Positioned(
+                          bottom: 80.h,
+                          width: width,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Lottie.asset(
+                                  Images.tacoJump,
+                                  height: 120.h,
+                                  width: 120.w,
+                                ),
+                                Lottie.asset(
+                                  Images.burgerJump,
+                                  height: 120.h,
+                                  width: 120.w,
+                                ),
+                                Lottie.asset(
+                                  Images.noodleJump,
+                                  height: 120.h,
+                                  width: 120.w,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],),
+                      SizedBox(height: 20.h),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: DashboardCategories(key: notifier.categoriesKey),
                       ),
-                      CustomDivider(
-                        thickness: 5,
-                        padding: EdgeInsets.only(top: 5.h),
-                      ),
+                      SizedBox(height: 20.h),
+                      // CustomDivider(
+                      //   thickness: 5,
+                      //   padding: EdgeInsets.only(top: 5.h),
+                      // ),
 
                       // Top Rated Restaurants
-                      Padding(
+                      Container(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CustomText(
-                              'Top Rated restaurants',
-                              fontSize: 20.sp,
-                              fontWeight: Fonts.semiBold,
-                            ),
-                            TextButton(
-                              onPressed: () {},
-                              child: const Text('View all'),
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    'CUSTOMER FAVORITES',
+                                    fontSize: 11.sp,
+                                    fontWeight: Fonts.semiBold,
+                                    color: AppColors.primary,
+                                  ),
+                                  CustomText(
+                                    'Top Rated restaurants',
+                                    fontSize: 18.sp,
+                                    fontWeight: Fonts.bold,
+                                  ),
+                                ]),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                CustomText(
+                                  'View all',
+                                  fontSize: 13.sp,
+                                  fontWeight: Fonts.semiBold,
+                                  color: AppColors.primary,
+                                ),
+                                CustomImage(
+                                  source: Images.nextArrow,
+                                  height: 14.h,
+                                  width: 14.w,
+                                  color: AppColors.primary,
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 210,
+                        height: 10.h,),
+                      SizedBox(
+                        height: 180.h,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.only(left: 16),
@@ -356,6 +504,7 @@ class DashboardScreen extends ConsumerWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Expanded(
+                                        flex: 8,
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -366,27 +515,42 @@ class DashboardScreen extends ConsumerWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               children: [
-                                                const Icon(
+                                                Icon(
                                                   Icons.work,
+                                                  size: 14.h,
                                                   color: AppColors.primary,
                                                 ),
                                                 SizedBox(width: 4.w),
                                                 CustomText(
                                                   "Work",
-                                                  fontSize: 18.sp,
+                                                  fontSize: 11.sp,
                                                 ),
                                               ],
                                             ),
-                                            CustomText(
-                                              "Aayat Bungalows, Sindhu Bhavan Ahmedabad",
-                                              fontSize: 16.sp,
+                                            Row(
+                                              children: [
+                                                Expanded(
+                                                  child: CustomText(
+                                                    "Hayat Bungalows, Sindhu Bhavan Ahmedabad",
+                                                    fontSize: 14.sp,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                CustomImage(
+                                                  source: Images.downArrow,
+                                                  height: 16.h,
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ),
-                                      CircleAvatar(
-                                        radius: 18.w,
-                                        child: Icon(Icons.person, size: 22.w),
+                                      Flexible(
+                                        flex: 2,
+                                        child: CircleAvatar(
+                                          radius: 18.w,
+                                          child: Icon(Icons.person, size: 22.w),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -424,8 +588,7 @@ class DashboardScreen extends ConsumerWidget {
                             )
                           : Column(
                               mainAxisSize: MainAxisSize.min,
-                              key: const ValueKey("headerIcons"),
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        key: const ValueKey("headerIcons"),
                               children: [
                                 CustomSearchBar(
                                   key: const ValueKey("headerSearch"),
