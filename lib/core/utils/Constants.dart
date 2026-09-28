@@ -76,11 +76,11 @@ final List<Map<String, dynamic>> topRatedRestaurants = [
   {
     "id": 1,
     "restaurant": "Wow! Momo",
-    "categories": "Momos",
+    "categories": "Momos, Dimsums",
     "deliveryTime": "40-50 mins",
     "isFavourite": true,
     "image":
-        "https://lh3.googleusercontent.com/p/AF1QipOuJEWf42qQP9M8X6ue-wejQSqrKoKSQJSzpJQ=s680-w680-h510-rw",
+        "https://media.xelta.ai/5ad627f5-5d45-4224-b931-3ef072aa182c.webp",
     "logo":
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiwoXUAbNVCz_aJk7dsfZieHPJDojdUHS9ww&s",
     "startingPrice": "99",
@@ -183,7 +183,7 @@ final List<Map<String, dynamic>> topRatedRestaurants = [
     "isFavourite": true,
     "rating": "3.2",
     "image":
-        "https://api.pizzahut.io/v1/content/en-in/in-1/images/pizza/margherita.5f4ef870fb437d0f7e82360758641f2b.1.jpg",
+        "https://luckkycorner.in/wp-content/uploads/2026/04/pizza-recipe-1024x512.webp",
     "logo":
         "https://mma.prnewswire.com/media/1583100/Pizza_Hut_Logo.jpg?p=facebook",
     "address": "CG Road, Maninagar, Ahmedabad, Gujarat 380008",
@@ -919,6 +919,18 @@ final List<Map<String, String>> favouritesFoodList = [
 final List<Map<String, dynamic>> spotlightRestaurants = [
   {
     "id": 1,
+    "discount": "Flat 15% OFF",
+    "restaurant": "Taj Skyline",
+    "tagline": "A luxury dining experience",
+    "cta": "ORDER NOW",
+    // "bannerColor": Color(0xff421818),
+    "bannerColor": Color(0xffc87620),
+    "image":
+    // "https://b.zmtcdn.com/data/pictures/chains/9/19727689/f2d3692e890f3709ceef821ef5399c33.jpg",
+    "https://b.zmtcdn.com/data/pictures/9/19727689/d20884be4c1b6b37e0277de8bace26a4.jpg",
+  },
+  {
+    "id": 2,
     "discount": "Flat 20% OFF",
     "restaurant": "Sankalp",
     "tagline": "Legacy of South Indian delights",
@@ -928,7 +940,7 @@ final List<Map<String, dynamic>> spotlightRestaurants = [
         "https://sankalprestaurants.com/wp-content/uploads/2023/10/Sankalp-Restaurant-79-1024x683.jpg",
   },
   {
-    "id": 2,
+    "id": 3,
     "discount": "Flat 50% OFF",
     "restaurant": "Novotel",
     "tagline": "Dine in luxury, savour in style",
@@ -938,45 +950,36 @@ final List<Map<String, dynamic>> spotlightRestaurants = [
         "https://b.zmtcdn.com/data/pictures/7/112827/d9f17515d2ce62722953529c07f7c2ce.jpg",
   },
   {
-    "id": 3,
-    "discount": "Flat 15% OFF",
-    "restaurant": "Taj Skyline",
-    "tagline": "A luxury dining experience",
-    "cta": "ORDER NOW",
-    "bannerColor": Color(0xff421818),
-    "image":
-        // "https://b.zmtcdn.com/data/pictures/chains/9/19727689/f2d3692e890f3709ceef821ef5399c33.jpg",
-        "https://assets.zeezest.com/blogs/PROD_Horizontal_1706718525929.jpg",
-  },
-  {
     "id": 4,
-    "discount": "Flat 30% OFF",
-    "restaurant": "Barbeque Nation",
-    "tagline": "Grill your own feast",
-    "cta": "RESERVE SEAT",
-    "bannerColor": Color(0xff776827),
-    "image":
-        "https://i0.wp.com/butterry.com/blog/wp-content/uploads/2023/06/barbeque-nation-buffet-price.webp?fit=1200%2C800&ssl=1",
-  },
-  {
-    "id": 5,
     "discount": "Flat 10% OFF",
     "restaurant": "Patang",
     "tagline": "Where every flavour tells a story",
     "cta": "ORDER ONLINE",
-    "bannerColor": Color(0xff421818),
+    // "bannerColor": Color(0xff421818),
+    "bannerColor": Color(0xff000000),
     "image":
-        "https://b.zmtcdn.com/data/pictures/2/110502/5eee561c02a072adeaad9ee85df98da8.jpg?fit=around|750:500&crop=750:500;*,*",
+    "https://b.zmtcdn.com/data/pictures/2/110502/5eee561c02a072adeaad9ee85df98da8.jpg?fit=around|750:500&crop=750:500;*,*",
+  },
+  {
+    "id": 5,
+    "discount": "Flat 30% OFF",
+    "restaurant": "Barbeque Nation",
+    "tagline": "Grill your own feast",
+    "cta": "RESERVE SEAT",
+    // "bannerColor": Color(0xff776827),
+    "bannerColor": Color(0xffc87620),
+    "image":
+        "https://i0.wp.com/butterry.com/blog/wp-content/uploads/2023/06/barbeque-nation-buffet-price.webp?fit=1200%2C800&ssl=1",
   },
   {
     "id": 6,
     "discount": "Flat 50% OFF",
-    "restaurant": "Binori- A Boutique Hotel",
+    "restaurant": "Collage - Hyatt",
     "tagline": "Where every meal is a memory",
     "cta": "DINE IN",
     "bannerColor": Color(0xff421818),
     "image":
-        "https://binorihotels.com/wp-content/uploads/2018/11/Introduction.jpg",
+        "https://b.zmtcdn.com/data/pictures/8/112098/8574d3bb6c8e78953b498dd490fa3e02.jpg?fit=around|960:500&crop=960:500;*,*",
   },
   {
     "id": 7,
@@ -1047,7 +1050,7 @@ final List<Map<String, dynamic>> lookingFor = [
   {"title": "Rooftops", "image": Images.dineOutRooftop},
   {"title": "Cozy Cafes", "image": Images.coffeeMug},
   {"title": "Romantic dining", "image": Images.wineGlasses},
-  {"title": "Buffet", "image": Images.buffettt},
+  {"title": "Buffet", "image": Images.buffet},
   {"title": "Family dining", "image": Images.familyDiningPlate},
   {"title": "Premium dining", "image": Images.premiumDiningPlate},
 ];

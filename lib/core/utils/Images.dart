@@ -75,7 +75,6 @@ mixin Images {
   static const dineOutRooftop = "${base_image_path}dineout_rooftop.png";
   static const coffeeMug = "${base_image_path}coffee_mug.png";
   static const buffet = "${base_image_path}buffet.png";
-  static const buffettt = "${base_image_path}buffet1.png";
   static const wineGlasses = "${base_image_path}wine_glasses.png";
   static const familyDiningPlate = "${base_image_path}family_dining_plate.png";
   static const premiumDiningPlate =
