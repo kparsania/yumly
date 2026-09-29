@@ -538,7 +538,7 @@ class _DineOutScreenState extends ConsumerState<DineOutScreen> {
                                     width:
                                     state.lookingFor![index]["title"] ==
                                         "Rooftops"
-                                        ? 120.h
+                                        ? 130.h
                                         : 100.w,
                                   ),
                                 ),
