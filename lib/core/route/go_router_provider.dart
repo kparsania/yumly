@@ -6,6 +6,7 @@ import 'package:yumly/features/cart/screens/add_address_screen.dart';
 import 'package:yumly/features/cart/screens/addresses_screen.dart';
 import 'package:yumly/features/cart/screens/cart_screen.dart';
 import 'package:yumly/features/cart/screens/coupons_screen.dart';
+import 'package:yumly/features/cart/screens/order_success_screen.dart';
 import 'package:yumly/features/tabs/screens/dashboard_screen.dart';
 import 'package:yumly/features/tabs/screens/dineout_screen.dart';
 import 'package:yumly/features/tabs/screens/favourites_screen.dart';
@@ -119,6 +120,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: ScreenNames.ADD_ADDRESS,
         name: ScreenNames.ADD_ADDRESS,
         builder: (context, state) => const AddAddressScreen(),
+      ),
+      GoRoute(
+        path: ScreenNames.ORDER_SUCCESS,
+        name: ScreenNames.ORDER_SUCCESS,
+        builder: (context, state) {
+          final raw = state.extra;
+          final Map<String, dynamic> orderData = switch (raw) {
+            final Map<String, dynamic> m => m,
+            final Map m => Map<String, dynamic>.from(m),
+            _ => <String, dynamic>{},
+          };
+          return OrderSuccessScreen(orderData: orderData);
+        },
       ),
     ],
   );

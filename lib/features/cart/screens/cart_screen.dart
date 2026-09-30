@@ -191,14 +191,39 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     );
   }
 
-  void _placeOrder(double total) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          'Order placed with ${_paymentShort(_payment)} • ₹${total.toStringAsFixed(0)}',
-        ),
-      ),
-    );
+  void _placeOrder({
+    required List<CartItem> items,
+    required String restaurantName,
+    required double subtotal,
+    required double deliveryFee,
+    required double expressFee,
+    required double couponDiscount,
+    required double tip,
+    required double total,
+    required String paymentMethod,
+    required String deliveryAddress,
+    required String deliveryInstructions,
+  }) {
+    if (items.isEmpty) return;
+    final orderData = <String, dynamic>{
+      'items': items.map((item) => item.copyWith()).toList(growable: false),
+      'restaurantName': restaurantName,
+      'subtotal': subtotal,
+      'deliveryFee': deliveryFee,
+      'expressFee': expressFee,
+      'couponDiscount': couponDiscount,
+      'tip': tip,
+      'total': total,
+      'paymentMethod': paymentMethod,
+      'deliveryAddress': deliveryAddress,
+      'deliveryInstructions': deliveryInstructions,
+      'deliveryTime': _deliverySpeed == _DeliverySpeed.express
+          ? '20-30 mins'
+          : '30-40 mins',
+      'orderId':
+          'GN${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+    };
+    context.pushNamed(ScreenNames.ORDER_SUCCESS, extra: orderData);
   }
 
   void _selectTipPreset(double amount) {
@@ -242,9 +267,6 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             price: price,
           ),
         );
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('${m.dishName} added')));
   }
 
   void _openAddressPicker() {
@@ -294,23 +316,33 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       ),
                       SizedBox(height: 12.h),
                       ...list.map(
-                        (a) => RadioListTile<String>(
-                          value: a.id,
+                        (a) => RadioGroup<String>(
                           groupValue: pick,
-                          activeColor: AppColors.primary,
                           onChanged: (v) {
-                            if (v != null) setModal(() => pick = v);
+                            if (v != null) {
+                              setModal(() => pick = v);
+                            }
                           },
-                          title: CustomText(
-                            a.label,
-                            fontWeight: Fonts.bold,
-                            fontSize: 14.sp,
-                          ),
-                          subtitle: CustomText(
-                            a.line,
-                            fontSize: 12.sp,
-                            color: AppColors.textSecondary,
-                            maxLines: 2,
+                          child: Column(
+                            children: [
+                              ...list.map(
+                                    (a) => RadioListTile<String>(
+                                  value: a.id,
+                                  activeColor: AppColors.primary,
+                                  title: CustomText(
+                                    a.label,
+                                    fontWeight: Fonts.bold,
+                                    fontSize: 14.sp,
+                                  ),
+                                  subtitle: CustomText(
+                                    a.line,
+                                    fontSize: 12.sp,
+                                    color: AppColors.textSecondary,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -537,7 +569,33 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   paymentShort: _paymentShort,
                   brandIcon: _paymentBrandIcon,
                   onPickPayment: _pickPayment,
-                  onPay: () => _placeOrder(total),
+                  onPay: () {
+                    final addresses = ref.read(checkoutAddressListProvider);
+                    final selectedId = ref.read(
+                      selectedCheckoutAddressIdProvider,
+                    );
+                    final matchingAddress = addresses.where(
+                      (a) => a.id == selectedId,
+                    );
+                    final address = matchingAddress.isNotEmpty
+                        ? matchingAddress.first
+                        : (addresses.isNotEmpty ? addresses.first : null);
+                    _placeOrder(
+                      items: cart,
+                      restaurantName: restaurantName,
+                      subtotal: subtotal,
+                      deliveryFee: delivery,
+                      expressFee: express,
+                      couponDiscount: couponOff,
+                      tip: tip,
+                      total: total,
+                      paymentMethod: _paymentLabel(_payment),
+                      deliveryAddress: address == null
+                          ? ''
+                          : '${address.label}: ${address.line}',
+                      deliveryInstructions: _instructionsController.text.trim(),
+                    );
+                  },
                 ),
               ],
             ),
