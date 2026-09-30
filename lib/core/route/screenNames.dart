@@ -13,4 +13,5 @@ mixin ScreenNames {
   static const COUPONS = '/coupons';
   static const ADDRESSES = '/addresses';
   static const ADD_ADDRESS = '/addAddress';
+  static const ORDER_SUCCESS = '/orderSuccess';
 }
