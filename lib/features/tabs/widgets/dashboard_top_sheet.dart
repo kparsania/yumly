@@ -7,14 +7,30 @@ import 'package:yumly/core/utils/Images.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
 import 'package:yumly/core/widgets/CustomText.dart';
 
+import 'package:go_router/go_router.dart';
+import 'package:yumly/core/route/screenNames.dart';
+
+import '../data/restaurant_catalog.dart';
 import '../../../core/widgets/CustomSearchBar.dart';
 
-class TopSheet extends StatelessWidget {
+class TopSheet extends StatefulWidget {
   final VoidCallback onClose;
 
+  const TopSheet({super.key, required this.onClose});
 
+  @override
+  State<TopSheet> createState() => _TopSheetState();
+}
+
+class _TopSheetState extends State<TopSheet> {
   final FocusNode _searchFocusNode = FocusNode();
-  TopSheet({super.key, required this.onClose});
+  String _query = '';
+
+  @override
+  void dispose() {
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
 
   // Top of the file: reusable function
 
@@ -54,12 +70,23 @@ class TopSheet extends StatelessWidget {
     );
   }
 
+  void _openRestaurant(Map<String, dynamic> item) {
+    widget.onClose();
+    context.pushNamed(ScreenNames.RESTAURANT_DETAIL, extra: item);
+  }
+
   @override
   Widget build(BuildContext context) {
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _searchFocusNode.requestFocus();
+        if (mounted && !_searchFocusNode.hasFocus) {
+          _searchFocusNode.requestFocus();
+        }
       });
+
+      final results = _query.trim().isEmpty
+          ? <Map<String, dynamic>>[]
+          : restaurantsForQuery(_query);
+      final recent = dashboardRestaurants().take(4).toList();
 
       return Material(
         color: Colors.transparent,
@@ -67,7 +94,7 @@ class TopSheet extends StatelessWidget {
           children: [
             // Dim background
             GestureDetector(
-              onTap: onClose,
+              onTap: widget.onClose,
               child: Container(color: Colors.black.withOpacity(0.4)),
             ),
             // Sheet content
@@ -79,7 +106,7 @@ class TopSheet extends StatelessWidget {
                       .of(context)
                       .padding
                       .top + 10.h,
-                  bottom: 20.h,
+                  bottom: 12.h,
                   left: 16.w,
                   right: 16.w,
                 ),
@@ -111,6 +138,7 @@ class TopSheet extends StatelessWidget {
                           height: 16.h,
                           width: 16.w,
                           color: AppColors.darkGrey,
+                          onTap: widget.onClose,
                         ),
                         Container(
                           alignment: Alignment.center,
@@ -146,13 +174,77 @@ class TopSheet extends StatelessWidget {
                             Radius.circular(12)),
                         border: Border.all(color: AppColors.divider),
                       ),
+                      onChanged: (value) => setState(() => _query = value),
                       onLeftIconTap: () {},
-                      onTap: () {
-                        // customLogPrint('openTopSheet');
-                        // notifier.openTopSheet();
-                      },
                     ),
-                    SizedBox(height: 18.h),
+                    SizedBox(height: 10.h),
+                    if (_query.trim().isNotEmpty) ...[
+                      CustomText(
+                        results.isEmpty
+                            ? 'NO RESTAURANTS FOUND'
+                            : 'MATCHING RESTAURANTS',
+                        fontWeight: Fonts.medium,
+                        fontSize: 12.sp,
+                      ),
+                      SizedBox(height: 14.h),
+                      if (results.isEmpty)
+                        CustomText(
+                          'Try pizza, momo, or cafe',
+                          fontSize: 13.sp,
+                          color: AppColors.textSecondary,
+                        )
+                      else
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 240.h),
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            primary: false,
+                            padding: EdgeInsets.zero,
+                            itemCount: results.length,
+                            separatorBuilder: (_, __) => SizedBox(height: 2.h),
+                            itemBuilder: (context, index) {
+                              final item = results[index];
+                              return InkWell(
+                                onTap: () => _openRestaurant(item),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 4.h),
+                                  child: Row(
+                                    children: [
+                                      CustomImage(
+                                        source: item['image']?.toString(),
+                                        isNetwork: true,
+                                        height: 40.w,
+                                        width: 40.w,
+                                        borderRadius: BorderRadius.circular(8.r),
+                                      ),
+                                      SizedBox(width: 10.w),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            CustomText(
+                                              '${item['restaurant'] ?? ''}',
+                                              fontSize: 14.sp,
+                                              fontWeight: Fonts.semiBold,
+                                            ),
+                                            CustomText(
+                                              '${item['categories'] ?? ''}',
+                                              fontSize: 12.sp,
+                                              color: AppColors.textSecondary,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                    ] else ...[
                     Row(
                       children: [
                         CustomText(
@@ -177,12 +269,16 @@ class TopSheet extends StatelessWidget {
                       spacing: 10.w,
                       runSpacing: 10.h,
                       children: [
-                        customChip(label: "micro cafe"),
-                        customChip(label: "Danny's Coffee"),
-                        customChip(label: "Gwalia Sweets & Restaurants"),
-                        customChip(label: "Bikanervala"),
+                        for (final item in recent)
+                          GestureDetector(
+                            onTap: () => _openRestaurant(item),
+                            child: customChip(
+                              label: '${item['restaurant'] ?? ''}',
+                            ),
+                          ),
                       ],
                     ),
+                    ],
                   ],
                 ),
               ),

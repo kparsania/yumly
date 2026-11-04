@@ -20,6 +20,8 @@ class FeaturedRestaurantsCard extends StatelessWidget {
   final String? deliveryTime;
   final String? quantity;
   final String? startingPrice;
+  final bool isFavourite;
+  final VoidCallback? onFavouriteTap;
 
   const FeaturedRestaurantsCard({
     super.key,
@@ -35,6 +37,8 @@ class FeaturedRestaurantsCard extends StatelessWidget {
     this.deliveryTime = "",
     this.quantity = "",
     this.startingPrice = "",
+    this.isFavourite = false,
+    this.onFavouriteTap,
   });
 
   @override
@@ -77,12 +81,16 @@ class FeaturedRestaurantsCard extends StatelessWidget {
               Positioned(
                 right: 6.w,
                 top: 6.h,
-                child: CustomImage(
-                  source: Images.heart,
-                  isSvg: true,
-                  height: 24.h,
-                  width: 24.w,
-                  color: AppColors.white,
+                child: GestureDetector(
+                  onTap: onFavouriteTap,
+                  behavior: HitTestBehavior.opaque,
+                  child: CustomImage(
+                    source: Images.heart,
+                    isSvg: true,
+                    height: 24.h,
+                    width: 24.w,
+                    color: isFavourite ? AppColors.primary : AppColors.white,
+                  ),
                 ),
               ),
               Positioned(

@@ -6,7 +6,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/utils/Constants.dart';
 import '../state/dashboard_state.dart';
 
@@ -22,7 +22,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
       topRatedRestaurants: topRatedRestaurants,
     ),
   ) {
-    scrollController.addListener(_onScroll);
+    // scrollController.addListener(_onScroll);
     _initHeaderAnimation();
     fetchData();
   }
@@ -33,6 +33,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
     state = state.copyWith(isHeaderVisible: true);
   }
 
+  /*
   void _onScroll() {
     final offset = scrollController.offset;
 
@@ -63,6 +64,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
       }
     }
   }
+  */
 
   // Simulated API call
   Future<void> fetchData() async {

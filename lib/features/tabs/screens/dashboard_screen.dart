@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
+
+// import 'package:lottie/lottie.dart';
 import 'package:yumly/core/utils/Colors.dart';
 import 'package:yumly/core/utils/Images.dart';
 import 'package:yumly/core/widgets/CustomImage.dart';
@@ -10,12 +11,18 @@ import 'package:yumly/features/tabs/widgets/dashboardShimmer.dart';
 
 import '../../../core/route/screenNames.dart';
 import '../../../core/utils/Fonts.dart';
-import '../../../core/widgets/CustomSearchBar.dart';
+
+// import '../../../core/widgets/CustomSearchBar.dart';
 import '../../../core/widgets/CustomText.dart';
 import '../../cart/provider/cart_provider.dart';
+import '../../cart/provider/checkout_address_provider.dart';
+import '../data/restaurant_catalog.dart';
 import '../provider/dashboard_provider.dart';
-import '../widgets/dashboard_categories.dart';
+import '../provider/favourites_provider.dart';
+
+// import '../widgets/dashboard_categories.dart';
 import '../widgets/dashboard_featured_restaurants.dart';
+import '../widgets/dashboard_header.dart';
 import '../widgets/dashboard_restaurant_card.dart';
 import '../widgets/dashboard_top_sheet.dart';
 
@@ -30,6 +37,14 @@ class DashboardScreen extends ConsumerWidget {
     final cartCount = ref
         .watch(cartProvider)
         .fold(0, (sum, e) => sum + e.quantity);
+    final addresses = ref.watch(checkoutAddressListProvider);
+    final selectedId = ref.watch(selectedCheckoutAddressIdProvider);
+    final savedNames = ref.watch(savedRestaurantNamesProvider);
+    SavedAddress? selectedAddress;
+    for (final address in addresses) {
+      if (address.id == selectedId) selectedAddress = address;
+    }
+    selectedAddress ??= addresses.isEmpty ? null : addresses.first;
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -37,10 +52,34 @@ class DashboardScreen extends ConsumerWidget {
           ? const Center(child: DashboardShimmer())
           : Stack(
               children: [
-                SingleChildScrollView(
+                CustomScrollView(
                   controller: notifier.scrollController,
-                  child: Column(
-                    children: [
+                  slivers: [
+                    SliverPersistentHeader(
+                      pinned: true,
+                      delegate: DashboardHeaderDelegate(
+                        topInset: MediaQuery.paddingOf(context).top,
+                        onSearchTap: notifier.openTopSheet,
+                        onAddressTap: () =>
+                            context.pushNamed(ScreenNames.ADDRESSES),
+                        onProfileTap: () =>
+                            context.pushNamed(ScreenNames.PROFILE),
+                        addressLabel: selectedAddress?.label ?? 'Add address',
+                        addressLine: selectedAddress?.line ??
+                            'Choose where to deliver',
+                      ),
+                    ),
+                    // SliverToBoxAdapter(
+                    // child: SizedBox(height: 20.h),
+                    // ),
+                    const SliverPersistentHeader(
+                      pinned: true,
+                      delegate: DashboardCategoriesDelegate(),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          /*
                       /// HEADER BACKGROUND + ANIMATION
                       AnimatedSlide(
                         duration: const Duration(milliseconds: 600),
@@ -318,13 +357,9 @@ class DashboardScreen extends ConsumerWidget {
                           ),
                         ),
                       ],),
-                      SizedBox(height: 20.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: DashboardCategories(key: notifier.categoriesKey),
-                      ),
-                      SizedBox(height: 20.h),
-                      // CustomDivider(
+                      */
+                          SizedBox(height: 14.h),
+                          // CustomDivider(
                       //   thickness: 5,
                       //   padding: EdgeInsets.only(top: 5.h),
                       // ),
@@ -350,22 +385,32 @@ class DashboardScreen extends ConsumerWidget {
                                     fontWeight: Fonts.bold,
                                   ),
                                 ]),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomText(
-                                  'View all',
-                                  fontSize: 13.sp,
-                                  fontWeight: Fonts.semiBold,
-                                  color: AppColors.primary,
-                                ),
-                                CustomImage(
-                                  source: Images.nextArrow,
-                                  height: 14.h,
-                                  width: 14.w,
-                                  color: AppColors.primary,
-                                ),
-                              ],
+                            GestureDetector(
+                              onTap: () => context.pushNamed(
+                                ScreenNames.RESTAURANT_LIST,
+                                extra: {
+                                  'title': 'Top Rated restaurants',
+                                  'items': state.topRatedRestaurants,
+                                },
+                              ),
+                              behavior: HitTestBehavior.opaque,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  CustomText(
+                                    'View all',
+                                    fontSize: 13.sp,
+                                    fontWeight: Fonts.semiBold,
+                                    color: AppColors.primary,
+                                  ),
+                                  CustomImage(
+                                    source: Images.nextArrow,
+                                    height: 14.h,
+                                    width: 14.w,
+                                    color: AppColors.primary,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -410,10 +455,20 @@ class DashboardScreen extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(
-                              'Top 210 restaurants to explore',
-                              fontSize: 20.sp,
-                              fontWeight: Fonts.semiBold,
+                            GestureDetector(
+                              onTap: () => context.pushNamed(
+                                ScreenNames.RESTAURANT_LIST,
+                                extra: {
+                                  'title': 'Restaurants to explore',
+                                  'items': dashboardRestaurants(),
+                                },
+                              ),
+                              behavior: HitTestBehavior.opaque,
+                              child: CustomText(
+                                'Top 210 restaurants to explore',
+                                fontSize: 20.sp,
+                                fontWeight: Fonts.semiBold,
+                              ),
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -441,6 +496,7 @@ class DashboardScreen extends ConsumerWidget {
                               padding: EdgeInsets.only(bottom: 50.h),
                               itemBuilder: (context, index) {
                                 var item = state.restaurantItems[index];
+                                final name = (item['restaurant'] ?? '').toString();
                                 return GestureDetector(
                                   onTap: () => context.pushNamed(
                                     ScreenNames.RESTAURANT_DETAIL,
@@ -450,13 +506,23 @@ class DashboardScreen extends ConsumerWidget {
                                     image: item['image'] ?? "",
                                     rating: item['rating'] ?? "",
                                     reviews: item['reviews'] ?? "",
-                                    restaurantName: item['restaurant'] ?? "",
+                                    restaurantName: name,
                                     location: item['location'] ?? "",
                                     price: item['price'].toString(),
                                     deliveryTime: item['deliveryTime'] ?? "",
                                     quantity: item['quantity'] ?? "",
                                     startingPrice: item['startingPrice'] ?? "",
                                     categories: item['categories'] ?? '',
+                                    isFavourite: savedNames.contains(name),
+                                    onFavouriteTap: () => ref
+                                        .read(
+                                          savedRestaurantNamesProvider.notifier,
+                                        )
+                                        .update((names) {
+                                          final next = {...names};
+                                          if (!next.add(name)) next.remove(name);
+                                          return next;
+                                        }),
                                   ),
                                 );
                               },
@@ -464,10 +530,13 @@ class DashboardScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
 
+                /*
                 /// HEADER STICKY BAR
                 IgnorePointer(
                   ignoring: false,
@@ -622,7 +691,7 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-
+                */
                 if (state.isTopSheetOpen)
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),

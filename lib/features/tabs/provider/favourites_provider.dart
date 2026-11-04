@@ -73,3 +73,8 @@ final favoritesProvider =
     StateNotifierProvider<FavoritesNotifier, FavoritesState>(
       (ref) => FavoritesNotifier(),
     );
+
+/// Restaurant names saved from the heart button on dashboard cards.
+final savedRestaurantNamesProvider = StateProvider<Set<String>>((ref) {
+  return <String>{};
+});

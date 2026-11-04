@@ -26,6 +26,7 @@ class CustomSearchBar extends StatefulWidget implements PreferredSizeWidget {
   final EdgeInsetsGeometry? margin;
   final bool? isSearchEnabled;
   final FocusNode? focusNode;
+  final ValueChanged<String>? onChanged;
 
   const CustomSearchBar({
     super.key,
@@ -45,6 +46,7 @@ class CustomSearchBar extends StatefulWidget implements PreferredSizeWidget {
     this.margin = EdgeInsets.zero,
     this.isSearchEnabled = true,
     this.focusNode,
+    this.onChanged,
   });
 
   @override
@@ -141,7 +143,10 @@ class _CustomSearchBarState extends State<CustomSearchBar>
                     controller: _controller,
                     focusNode: widget.focusNode ?? _focusNode,
                     enabled: widget.isSearchEnabled,
-                    onChanged: (_) => setState(() {}),
+                    onChanged: (value) {
+                      setState(() {});
+                      widget.onChanged?.call(value);
+                    },
                     onTap: widget.onTap,
                     style: TextStyle(
                       color: AppColors.textPrimary,
