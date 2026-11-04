@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:yumly/core/route/screenNames.dart';
 import 'package:yumly/core/utils/Images.dart';
+import 'package:yumly/features/tabs/data/restaurant_catalog.dart';
 
 import '../../../../core/widgets/CustomHeader.dart';
 import '../providers/categories_provider.dart';
@@ -25,7 +28,13 @@ class CategoriesScreen extends ConsumerWidget {
                 backgroundColor: Colors.white,
                 iconColor: Colors.black,
                 rightIcon1: Images.search,
-                onRightIcon1Tap: () {},
+                onRightIcon1Tap: () => context.pushNamed(
+                  ScreenNames.RESTAURANT_LIST,
+                  extra: {
+                    'title': 'Search',
+                    'items': dashboardRestaurants(),
+                  },
+                ),
               ),
               state.isLoading
                   ? CircularProgressIndicator()
@@ -43,10 +52,21 @@ class CategoriesScreen extends ConsumerWidget {
                       itemCount: state.categoriesList.length,
                       itemBuilder: (context, index) {
                         final item = state.categoriesList[index];
-                        return CategoriesItem(
-                          imagePath: item['image'],
-                          title: item['title'],
-                          subtitle: item['subtitle'],
+                        return GestureDetector(
+                          onTap: () => context.pushNamed(
+                            ScreenNames.RESTAURANT_LIST,
+                            extra: {
+                              'title': item['title'],
+                              'items': restaurantsForCategory(
+                                '${item['title']}',
+                              ),
+                            },
+                          ),
+                          child: CategoriesItem(
+                            imagePath: item['image'],
+                            title: item['title'],
+                            subtitle: item['subtitle'],
+                          ),
                         );
                       },
                     ),

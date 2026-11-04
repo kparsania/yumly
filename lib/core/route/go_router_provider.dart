@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:yumly/core/route/screenNames.dart';
 import 'package:yumly/features/cart/screens/add_address_screen.dart';
+import 'package:yumly/features/profile/screens/profile_screen.dart';
+import 'package:yumly/features/tabs/screens/restaurant_list_screen.dart';
 import 'package:yumly/features/cart/screens/addresses_screen.dart';
 import 'package:yumly/features/cart/screens/cart_screen.dart';
 import 'package:yumly/features/cart/screens/coupons_screen.dart';
@@ -119,6 +121,28 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: ScreenNames.ADD_ADDRESS,
         name: ScreenNames.ADD_ADDRESS,
         builder: (context, state) => const AddAddressScreen(),
+      ),
+      GoRoute(
+        path: ScreenNames.PROFILE,
+        name: ScreenNames.PROFILE,
+        builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: ScreenNames.RESTAURANT_LIST,
+        name: ScreenNames.RESTAURANT_LIST,
+        builder: (context, state) {
+          final raw = state.extra;
+          final data = raw is Map ? Map<String, dynamic>.from(raw) : {};
+          final title = (data['title'] ?? 'Restaurants').toString();
+          final items = <Map<String, dynamic>>[];
+          final rawItems = data['items'];
+          if (rawItems is List) {
+            for (final entry in rawItems) {
+              if (entry is Map) items.add(Map<String, dynamic>.from(entry));
+            }
+          }
+          return RestaurantListScreen(title: title, restaurants: items);
+        },
       ),
     ],
   );

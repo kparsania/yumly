@@ -34,10 +34,15 @@ class CheckoutAddressNotifier extends StateNotifier<List<SavedAddress>> {
   CheckoutAddressNotifier()
     : super([
         const SavedAddress(
+          id: 'work',
+          label: 'Work',
+          line: 'Hayat Bungalows, Sindhu Bhavan Ahmedabad',
+          isDefault: true,
+        ),
+        const SavedAddress(
           id: 'a1',
           label: 'Home',
           line: _sampleLine,
-          isDefault: true,
         ),
         const SavedAddress(id: 'a2', label: 'office', line: _sampleLine),
         const SavedAddress(id: 'a3', label: 'Park', line: _sampleLine),
@@ -68,4 +73,6 @@ final checkoutAddressListProvider =
       (ref) => CheckoutAddressNotifier(),
     );
 
-final selectedCheckoutAddressIdProvider = StateProvider<String>((ref) => 'a1');
+final selectedCheckoutAddressIdProvider = StateProvider<String>(
+  (ref) => 'work',
+);
