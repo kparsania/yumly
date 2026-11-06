@@ -15,4 +15,5 @@ mixin ScreenNames {
   static const ADD_ADDRESS = '/addAddress';
   static const PROFILE = '/profile';
   static const RESTAURANT_LIST = '/restaurantList';
+  static const ORDER_SUCCESS = '/orderSuccess';
 }
