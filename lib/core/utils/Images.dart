@@ -4,6 +4,9 @@ mixin Images {
   /// SVG UI icons (see [assets/icons/]).
   static const base_icon_path = "assets/icons/";
 
+  /// Lottie json (see [assets/lottie/]).
+  static const base_json_path = "assets/lottie/";
+
   static const small_logo = "${base_image_path}small_logo.png";
   static const logo = "${base_image_path}logo.png";
 
@@ -12,7 +15,7 @@ mixin Images {
   static const m = "${base_image_path}m.png";
   static const l = "${base_image_path}l.png";
 
-  static const noImage = "${base_image_path}noImage.jpeg";
+  static const noImage = "${base_image_path}no_image.jpeg";
   static const mcdonaldLogo = "${base_image_path}mcDonald-logo.png";
   static const burgerBig = "${base_image_path}burger_big.png";
   static const nonagon = "${base_image_path}nonagon.png";
@@ -51,7 +54,7 @@ mixin Images {
   static const dashboardBannerMessage =
       "${base_image_path}dashboard_banner_message.png";
   static const card = "${base_image_path}card1.png";
-  static const bannerBorder = "${base_image_path}bannerBorder.png";
+  static const bannerBorder = "${base_image_path}banner_border.png";
   static const reorder = "${base_icon_path}reorder.svg";
   static const reorderFilled = "${base_icon_path}reorderFilled.svg";
   static const home = "${base_icon_path}home.svg";
@@ -89,12 +92,11 @@ mixin Images {
 
   // Lottie
   /// Center burst–style confetti (replace with your LottieFiles JSON if you prefer #1 or #2).
-  static const couponAppliedLottie = "assets/lottie/coupon_success_burst.json";
-  static const dashboardBanner = "${base_image_path}dashboardBanner1.json";
-  static const splashFood = "${base_image_path}splashFood.json";
-  static const tacoJump = "${base_image_path}tacoJump.json";
-  static const burgerJump = "${base_image_path}burgerJump.json";
-  static const noodleJump = "${base_image_path}noodleJump.json";
+  static const couponAppliedLottie = "${base_json_path}coupon_success_burst.json";
+  static const dashboardBanner = "${base_json_path}dashboard_banner.json";
+  static const tacoJump = "${base_json_path}taco_jump.json";
+  static const burgerJump = "${base_json_path}burger_jump.json";
+  static const noodleJump = "${base_json_path}noodle_jump.json";
 
   /// Checkout / payment (SVG in [assets/icons/]; same base names as former PNGs).
   static const checkoutGpay = "${base_icon_path}checkout_gpay.svg";
@@ -104,6 +106,8 @@ mixin Images {
       "${base_image_path}checkout_delivery_man.png";
   static const checkoutDeliveryManSticker =
       "${base_image_path}checkout_delivery_man_sticker.png";
+    static const orderPlacedBg =
+      "${base_image_path}order_placed_bg.png";
 
   /// Shown when a coupon is applied (short animated GIF).
   static const couponAppliedCelebration =
